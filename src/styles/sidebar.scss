@@ -1,0 +1,154 @@
+.sidebar {
+  height: 100vh;
+  max-width: 25%;
+  min-width: 250px;
+  background-color: lightgray;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+}
+
+.search-div {
+  width: 90%;
+}
+
+.task-btns {
+  width: 90%;
+  margin-top: 20px;
+
+  .btn-group {
+    width: 100%;
+
+    .btn {
+      width: 50%;
+    }
+  }
+}
+
+.add-task-div,
+.add-event-div,
+.add-work-order-div,
+.add-customer-div,
+.add-employee-div {
+  width: 90%;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20px;
+
+  button {
+    width: 100%;
+  }
+}
+
+.name-div,
+.start-end-date-div,
+.start-end-time-div {
+  display: flex;
+  justify-content: space-between;
+
+  .form-group {
+    width: 49%;
+  }
+}
+
+.recurring-div {
+  margin-bottom: 5px;
+}
+
+.job-info-div {
+  display: flex;
+  justify-content: space-between;
+
+  .job-title-form-group {
+    width: 74%;
+  }
+
+  .tier-level-form-group {
+    width: 24%;
+  }
+}
+
+.manager-div {
+  display: flex;
+  justify-content: space-between;
+
+  .form-group {
+    width: 49%;
+  }
+}
+
+.password-div {
+  display: flex;
+  justify-content: space-between;
+
+  .form-group {
+    width: 49%;
+  }
+}
+
+.time-div {
+  display: flex;
+  justify-content: space-between;
+
+  .form-group {
+    width: 49%;
+  }
+}
+
+.invalid {
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.add-customer-form {
+  display: flex;
+  flex-direction: column;
+
+  .primary-contact-name,
+  .shop-address-city-div,
+  .shop-state-zipcode-div,
+  .billing-contact-name,
+  .billing-address-city-div,
+  .billing-state-zipcode-div,
+  .primary-phone-div,
+  .billing-phone-div,
+  .primary-email-jobTitle-div,
+  .billing-email-jobTitle-div {
+    display: flex;
+    justify-content: space-between;
+
+    .form-group {
+      width: 49%;
+    }
+  }
+
+  .primary-office-phone-div,
+  .billing-office-phone-div {
+    display: flex;
+    justify-content: space-between;
+    width: 49%;
+
+    .primary-number,
+    .billing-number {
+      width: 74%;
+    }
+
+    .primary-ext,
+    .billing-ext {
+      width: 24%;
+    }
+  }
+
+  .form-label {
+    font-weight: bold;
+    text-decoration: underline;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .checkbox-div {
+    align-self: center;
+  }
+}

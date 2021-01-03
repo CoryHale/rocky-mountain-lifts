@@ -1,0 +1,228 @@
+.content-page {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 100px;
+
+  h1 {
+      text-align: center;
+      font-family: 'Merriweather', serif;
+      text-decoration: underline;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+  }
+}
+
+.customer-table {
+  width: 90%;
+  margin: 0 auto;
+
+  .table-header {
+    background: #e6e6e6;
+
+    td {
+      font-weight: bold;
+      color: gray;
+    }
+  }
+}
+
+.customer-page-content {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-family: "Merriweather", serif;
+    text-decoration: underline;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .nav:hover {
+    cursor: pointer;
+  }
+}
+
+.tab-content {
+  width: 90%;
+
+  .tab-pane {
+    width: 100%;
+  }
+
+  .customer-info-page-div {
+    display: flex;
+    flex-direction: column;
+
+    .customer-page-contacts {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-evenly;
+
+      .form-group {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h3 {
+          text-transform: uppercase;
+          text-decoration: underline;
+        }
+
+        div {
+          width: 80%;
+        }
+
+        p {
+          margin-bottom: 0;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+
+    .customer-page-addresses {
+      display: flex;
+      justify-content: space-evenly;
+
+      .form-group {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h3 {
+          text-transform: uppercase;
+          text-decoration: underline;
+        }
+
+        .address-link {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          p {
+            margin: 0 auto;
+          }
+        }
+
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .info-edit-button {
+      width: 25%;
+      margin: 0 auto;
+      align-self: center;
+    }
+  }
+
+  .customer-page-note-tab {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .note-card {
+      width: 90%;
+      margin-bottom: 20px;
+
+      div {
+        display: flex;
+      }
+    }
+
+    button {
+      width: 75%;
+    }
+  }
+
+  .customer-page-employees-table {
+    margin-top: 10px;
+  }
+
+  .add-employee-div {
+    width: 75%;
+  }
+}
+
+.customer-page-task-tab {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .task-table-header {
+    .table-headers {
+      display: flex;
+      justify-content: space-around;
+      border-bottom: 1px solid lightgray;
+    }
+  }
+
+  .task-card {
+    box-shadow: 2px 3px 5px;
+    margin-bottom: 5px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .task-card-table {
+      margin-bottom: 0;
+
+      .table-data {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  }
+
+  button {
+    margin-top: 20px;
+    align-self: center;
+    width: 75%;
+  }
+}
+
+.add-employee-name-div {
+  display: flex;
+  justify-content: space-between;
+
+  .form-group {
+    width: 49%;
+  }
+}
+
+.employee-phone-div {
+  display: flex;
+  justify-content: space-between;
+
+  .employee-office-number {
+    width: 59%;
+  }
+
+  .employee-office-ext {
+    width: 39%;
+  }
+}
+
+.add-task-date-div {
+  display: flex;
+  justify-content: space-between;
+
+  .form-group {
+    width: 49%;
+  }
+}
+
+.invalid {
+  border: 1px solid red;
+  border-radius: 5px;
+}

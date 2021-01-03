@@ -1,0 +1,99 @@
+.tasks-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+
+  h1 {
+    font-family: "Merriweather", serif;
+    text-decoration: underline;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .tasks-page-task-card {
+    width: 70%;
+    margin-bottom: 20px;
+    box-shadow: 2px 3px 5px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      thead,
+      tbody {
+        tr {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+
+          th,
+          td {
+            width: 33%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.calendar-page {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+  
+    &:hover {
+      background-color: #218838;
+      border-color: #218838;
+    }
+  
+    &:active,
+    &.active {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+  
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+  
+    &:focus,
+    &.focus {
+      background-color: #218838;
+      border-color: #1e7e34;
+      box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
+    }
+  
+    &:not(:disabled):not(.disabled):active:focus,
+    &:not(:disabled):not(.disabled).active:focus {
+      box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
+    }
+  
+    &:disabled,
+    &.disabled {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+  }
+}
+
+.customer-calendar-page {
+  margin-top: 10px;
+}

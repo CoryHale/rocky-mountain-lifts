@@ -1,0 +1,36 @@
+.employees-page {
+  width: 100%;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-family: "Merriweather", serif;
+    text-decoration: underline;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+}
+
+.fa-pen:hover {
+  color: limegreen;
+}
+
+.fa-trash:hover {
+  color: limegreen;
+}
+
+.tier-level-col {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-two-footer {
+  display: flex;
+  justify-content: space-around;
+
+  .modal-two-btn {
+    width: 25%;
+  }
+}

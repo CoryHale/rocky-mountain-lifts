@@ -1,0 +1,39 @@
+.header {
+  background-color: #2f2f2f;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 5;
+
+  .logo {
+    width: 360px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-link {
+    color: white;
+    text-transform: uppercase;
+
+    &:hover {
+      cursor: pointer;
+      color: limegreen;
+    }
+  }
+
+  .active {
+    border-bottom: 1px solid limegreen;
+  }
+
+  .divider {
+    height: 8vh;
+    width: 1px;
+    margin: 0 1vw;
+    display: block;
+    overflow: hidden;
+    background-color: #72757e;
+  }
+}

@@ -1,0 +1,192 @@
+.work-orders-page {
+  width: 100%;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .open-work-orders-title {
+    font-family: "Merriweather", serif;
+    text-decoration: underline;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .work-order-card {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    box-shadow: 2px 3px 5px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.work-order-page {
+  display: flex;
+
+  .work-order-page-content {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 100px;
+
+    h1 {
+      text-align: center;
+      font-family: "Merriweather", serif;
+      text-decoration: underline;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .work-order-info {
+      width: 75%;
+      margin: 0 auto;
+    }
+
+    .service-div {
+      display: flex;
+      justify-content: space-between;
+
+      .form-group {
+        width: 49%;
+      }
+    }
+
+    .date-div {
+      display: flex;
+      justify-content: space-between;
+
+      .form-group {
+        width: 49%;
+      }
+    }
+
+    .button-div {
+      width: 75%;
+      margin: 0 auto;
+
+      .form-group {
+        width: 100%;
+
+        button {
+          width: 100%;
+        }
+      }
+
+      .secondary-button-div {
+        display: flex;
+        justify-content: space-between;
+
+        .form-group {
+          width: 49%;
+
+          .training-button:hover {
+            color: white;
+          }
+        }
+      }
+    }
+
+    .service-table {
+      h5 {
+        text-align: center;
+        font-family: "Merriweather", serif;
+        text-decoration: underline;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+    }
+
+    .travel-div {
+      display: flex;
+      justify-content: space-between;
+
+      .form-group {
+        width: 49%;
+      }
+    }
+
+    .signature-pad-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .clear-button {
+        padding: 0;
+        border: 0px;
+        box-shadow: none;
+
+        &:hover {
+          background-color: white;
+        }
+
+        .fa-times {
+          color: black;
+
+          &:hover {
+            color: red;
+          }
+        }
+      }
+    }
+
+    .signature-pad {
+      width: 100%;
+      border: 1px solid lightgray;
+      border-radius: 5px;
+    }
+
+    .submit-button {
+      width: 75%;
+      margin: 0 auto;
+
+      button {
+        width: 100%;
+      }
+    }
+
+    .edit-button {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.parts-group {
+  display: flex;
+  justify-content: space-around;
+
+  button {
+    width: 35%;
+  }
+}
+
+.equipment-div {
+  display: flex;
+  justify-content: space-between;
+
+  .form-group {
+    width: 49%;
+  }
+}
+
+.part-div {
+  h5 {
+    text-align: center;
+    font-family: "Merriweather", serif;
+    text-decoration: underline;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .part-table {
+    table-layout: fixed;
+
+    tr {
+      td {
+        overflow: hidden;
+      }
+    }
+  }
+}

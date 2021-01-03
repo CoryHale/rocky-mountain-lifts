@@ -1,0 +1,114 @@
+.login-page {
+  height: 100vh;
+  background-size: cover;
+  background-image: url("../assets/skSkylift.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+
+  .header {
+    width: 100%;
+    top: 0;
+    position: fixed;
+    z-index: 1;
+    background-color: #2f2f2f;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .logo-box {
+      img {
+        width: 360px;
+      }
+    }
+  }
+
+  .login-box {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .card {
+      background-color: rgba(47, 47, 47, 0.5) !important;
+      padding: 10px;
+      border-radius: 10px;
+      width: 40%;
+      margin: 0 auto;
+      min-width: 300px;
+
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 0;
+
+        h2 {
+          font-family: "Merriweather", serif;
+          text-transform: uppercase;
+          color: limegreen;
+          font-weight: 800;
+          font-size: 3rem;
+          margin-bottom: 2rem;
+        }
+
+        h3 {
+          font-family: "Merriweather", serif;
+          text-transform: uppercase;
+          color: limegreen;
+          font-weight: 800;
+          font-size: 2rem;
+          margin-bottom: 1rem;
+        }
+
+        form {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .form-group {
+            width: 100%;
+
+            label {
+              font-size: 1.2rem;
+              color: limegreen;
+              text-transform: uppercase;
+              margin-bottom: 0;
+            }
+          }
+
+          .btn {
+            width: 75%;
+            margin-bottom: 1rem;
+          }
+        }
+
+        .link {
+          color: limegreen;
+        }
+      }
+    }
+  }
+}
+
+footer {
+  background-color: #2f2f2f;
+  width: 100%;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  z-index: 5;
+  color: white;
+  display: flex;
+  justify-content: center;
+
+  .credits {
+    display: flex;
+    justify-content: center;
+
+    p {
+      margin: 0;
+    }
+  }
+}
