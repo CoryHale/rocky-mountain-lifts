@@ -675,30 +675,23 @@ const WorkOrder = () => {
   };
 
   const toggleEditService = (e, service) => {
-    if (
-      workOrder.status === "Open" ||
-      (workOrder.status === "In Review" &&
-        workOrder.serviceManager === currentUser.uid)
-    ) {
-      if (editServiceOpen) {
-        setCurrentService({
-          make: "",
-          type: "",
-          model: "",
-          serialNumber: "",
-          bayNumber: "",
-          serviceDone: "",
-          billableHours: null,
-          partsUsed: [],
-          partsNeeded: [],
-          images: [],
-        });
-      } else {
-        setCurrentService(service);
-      }
-      setEditServiceOpen(!editServiceOpen);
+    if (editServiceOpen) {
+      setCurrentService({
+        make: "",
+        type: "",
+        model: "",
+        serialNumber: "",
+        bayNumber: "",
+        serviceDone: "",
+        billableHours: null,
+        partsUsed: [],
+        partsNeeded: [],
+        images: [],
+      });
+    } else {
+      setCurrentService(service);
     }
-    console.log(service);
+    setEditServiceOpen(!editServiceOpen);
   };
 
   const handleServiceEditChange = (e) => {
@@ -708,9 +701,7 @@ const WorkOrder = () => {
     });
   };
 
-  const submitServiceEditChange = e => {
-    
-  }
+  const submitServiceEditChange = (e) => {};
 
   return (
     <div className="work-order-page">
@@ -722,6 +713,16 @@ const WorkOrder = () => {
               <Label for="customerName">Customer Name</Label>
               <Input disabled value={customer.businessName} />
             </FormGroup>
+            <div className="contact-div">
+              <FormGroup>
+                <Label for="contactName">Contact Name</Label>
+                <Input disabled value={workOrder.contactName} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="contactNumber">Contact Number</Label>
+                <Input disabled value={workOrder.contactNumber} />
+              </FormGroup>
+            </div>
             <FormGroup>
               <Label for="customerAddress">Customer Address</Label>
               <a
@@ -814,16 +815,20 @@ const WorkOrder = () => {
                       <thead>
                         <th>Service Type</th>
                         <th>Service Description</th>
+                        <th>Parts Used</th>
                         <th>Parts Needed</th>
+                        <th>Billable Hours</th>
                       </thead>
                       <tbody>
                         {workOrder.serviceDone.map((service) => (
                           <tr onClick={(e) => toggleEditService(e, service)}>
                             <td scope="row">{service.type}</td>
                             <td>{service.serviceDone}</td>
+                            <td>{service.partsUsed.length > 0 ? "Y" : "N"}</td>
                             <td>
                               {service.partsNeeded.length > 0 ? "Y" : "N"}
                             </td>
+                            <td>{service.billableHours}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -1484,7 +1489,9 @@ const WorkOrder = () => {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={submitServiceEditChange}>Save</Button>
+          <Button color="success" onClick={submitServiceEditChange}>
+            Save
+          </Button>
         </ModalFooter>
       </Modal>
     </div>

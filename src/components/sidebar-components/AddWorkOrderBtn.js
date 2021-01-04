@@ -20,6 +20,8 @@ import "../../styles/sidebar.scss";
 const AddWorkOrderBtn = () => {
   const [workOrder, setWorkOrder] = useState({
     customer: "",
+    contactName: "",
+    contactNumber: "",
     serviceDate: "",
     serviceStartTime: "",
     serviceEndTime: "",
@@ -75,6 +77,8 @@ const AddWorkOrderBtn = () => {
       setWorkOrder({
         ...workOrder,
         customer: "",
+        contactName: "",
+        contactNumber: "",
         serviceDate: "",
         serviceStartTime: "",
         serviceEndTime: "",
@@ -105,6 +109,8 @@ const AddWorkOrderBtn = () => {
             label: user.businessName,
             value: user.userId,
             name: "customer",
+            contactName: `${user.primaryContact && user.primaryContact.firstName}${user.primaryContact && user.primaryContact.lastName}`,
+            contactNumber: user.primaryOfficeNumber
           });
         }
       });
@@ -156,6 +162,8 @@ const AddWorkOrderBtn = () => {
       setWorkOrder({
         ...workOrder,
         customer: "",
+        contactName: "",
+        contactNumber: "",
         serviceDate: "",
         serviceStartTime: "",
         serviceEndTime: "",
@@ -182,6 +190,15 @@ const AddWorkOrderBtn = () => {
     setWorkOrder({
       ...workOrder,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleCustomerChange = (e) => {
+    setWorkOrder({
+      ...workOrder,
+      [e.name]: e.value,
+      contactName: e.contactName,
+      contactNumber: e.contactNumber
     });
   };
 
@@ -279,7 +296,7 @@ const AddWorkOrderBtn = () => {
               <Select
                 options={customers}
                 name="customer"
-                onChange={handleSelectChange}
+                onChange={handleCustomerChange}
                 className={errors.customer ? "invalid" : ""}
               />
               <Input
@@ -289,6 +306,31 @@ const AddWorkOrderBtn = () => {
               />
               <FormFeedback>{errors.customer}</FormFeedback>
             </FormGroup>
+            <div className="contact-div">
+              <FormGroup>
+                <Label for="contact-name">Contact Name</Label>
+                <Input
+                  type="text"
+                  name="contactName"
+                  id="contactName"
+                  value={workOrder.contactName}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="contact-number">Contact Number</Label>
+                <Input
+                  type="text"
+                  name="contactNumber"
+                  id="contactNumber"
+                  placeholder="XXX-XXX-XXXX"
+                  value={workOrder.contactNumber}
+                  onChange={handleChange}
+                  invalid={errors.contactNumber ? true : false}
+                />
+                <FormFeedback>{errors.contactNumber}</FormFeedback>
+              </FormGroup>
+            </div>
             <FormGroup>
               <Label for="date">Date</Label>
               <Input

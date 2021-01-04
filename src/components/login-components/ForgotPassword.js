@@ -27,7 +27,7 @@ const ForgotPassword = () => {
   });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const { forgotPassword } = useAuth();
+  const { resetPassword } = useAuth();
 
   const handleChange = (e) => {
     setCreds({
@@ -41,7 +41,7 @@ const ForgotPassword = () => {
 
     try {
       setError("");
-      await forgotPassword(creds.email);
+      await resetPassword(creds.email);
       setMessage("Please check you email for further instructions");
     } catch {
       setError("Failed to send email");

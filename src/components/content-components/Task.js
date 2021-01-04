@@ -30,6 +30,7 @@ import "../../styles/task.scss";
 
 const Task = () => {
   const [tasks, setTasks] = useState([]);
+  const [myTasks, setMyTasks] = useState([]);
   const fetchTasks = useSelector((state) => state.getTasksReducer.tasks);
   const [workOrders, setWorkOrders] = useState([]);
   const fetchWorkOrders = useSelector(
@@ -41,14 +42,16 @@ const Task = () => {
   );
   const [isOpen, setIsOpen] = useState(false);
   const [currentTask, setCurrentTask] = useState();
+  const [assigned, setAssigned] = useState([]);
   const editSuccess = useSelector((state) => state.editTaskReducer.success);
   const deleteSuccess = useSelector((state) => state.deleteTaskReducer.success);
   const [errors, setErrors] = useState({
     taskDescription: "",
     taskDate: "",
     taskTime: "",
-    employeeId: "",
+    assignedTo: [],
   });
+  const [curUserInfo, setCurUserInfo] = useState();
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -61,6 +64,16 @@ const Task = () => {
   }, []);
 
   useEffect(() => {
+    const myArray = [];
+
+    if (fetchTasks.tasks) {
+      fetchTasks.tasks.forEach((task) => {
+        if (task.assignedTo.includes(currentUser.uid)) {
+          myArray.push(task);
+        }
+      });
+    }
+    setMyTasks(myArray);
     setTasks(fetchTasks.tasks);
   }, [fetchTasks]);
 
@@ -100,9 +113,12 @@ const Task = () => {
           array.push({
             label: `${employee.firstName} ${employee.lastName}`,
             value: employee.userId,
-            name: "employeeId",
+            name: "assignedTo",
             jobTitle: employee.jobTitle,
           });
+        }
+        if (employee.userId === currentUser.uid) {
+          setCurUserInfo(employee);
         }
       });
 
@@ -146,8 +162,24 @@ const Task = () => {
     return `${timeArray[0]}:${timeArray[1]} ${m}`;
   };
 
+  const crewConverter = (array) => {
+    const crewArray = [];
+
+    for (let i = 0; i < employees.length; i++) {
+      if (array.includes(employees[i].value)) {
+        crewArray.push(employees[i]);
+      }
+    }
+
+    console.log(crewArray)
+    setAssigned(crewArray);
+  };
+
   const toggle = (e, task) => {
-    setCurrentTask(task);
+    if (task) {
+      crewConverter(task.assignedTo);
+      setCurrentTask(task);
+    }
     setIsOpen(!isOpen);
   };
 
@@ -162,10 +194,16 @@ const Task = () => {
     });
   };
 
-  const handleSelectChange = (e) => {
+  const handleMultiSelectChange = (e) => {
+    const members = [];
+
+    e.map((e) => {
+      members.push(e.value);
+    });
+
     setCurrentTask({
       ...currentTask,
-      [e.name]: e.value,
+      assignedTo: members,
     });
   };
 
@@ -181,9 +219,9 @@ const Task = () => {
 
   return (
     <div className="tasks-page">
-      <h1>Tasks</h1>
-      {tasks
-        ? tasks.map((task) => (
+      <h1>My Tasks</h1>
+      {myTasks
+        ? myTasks.map((task) => (
             <Card
               onClick={(e) => toggle(e, task)}
               className="tasks-page-task-card"
@@ -207,7 +245,35 @@ const Task = () => {
             </Card>
           ))
         : null}
-      <h1>Work Orders</h1>
+      {curUserInfo && curUserInfo.tierLevel > 1 ? <h1>All Tasks</h1> : null}
+      {curUserInfo && curUserInfo.tierLevel > 1
+        ? tasks
+          ? tasks.map((task) => (
+              <Card
+                onClick={(e) => toggle(e, task)}
+                className="tasks-page-task-card"
+              >
+                <Table borderless>
+                  <thead>
+                    <tr>
+                      <th>Task</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{task.taskDescription}</td>
+                      <td>{dateConverter(task.taskDate)}</td>
+                      <td>{timeConverter(task.taskTime)}</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </Card>
+            ))
+          : null
+        : null}
+      <h1>My Work Orders</h1>
       {workOrders
         ? workOrders.map((workOrder) => (
             <Card
@@ -220,13 +286,15 @@ const Task = () => {
                     <th>Work Order #</th>
                     <th>Customer</th>
                     <th>Service Date</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>{workOrder.workOrderId}</td>
                     <td>{workOrder.customerName}</td>
-                    <td>{workOrder.serviceDate}</td>
+                    <td>{dateConverter(workOrder.serviceDate)}</td>
+                    <td>{workOrder.status}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -278,18 +346,17 @@ const Task = () => {
               <Label>Assigned To</Label>
               <Select
                 options={employees}
-                defaultValue={
-                  currentTask ? { value: currentTask.employeeId } : null
-                }
-                onChange={handleSelectChange}
-                className={errors.employeeId ? "invalid" : ""}
+                isMulti
+                defaultValue={[...assigned]}
+                onChange={handleMultiSelectChange}
+                className={errors.assignedTo ? "invalid" : ""}
               />
               <Input
                 type="hidden"
                 disabled
-                invalid={errors.employeeId ? true : false}
+                invalid={errors.assignedTo ? true : false}
               />
-              <FormFeedback>{errors.employeeId}</FormFeedback>
+              <FormFeedback>{errors.assignedTo}</FormFeedback>
             </FormGroup>
           </Form>
         </ModalBody>

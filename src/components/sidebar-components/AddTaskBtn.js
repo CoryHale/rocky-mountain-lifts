@@ -23,7 +23,7 @@ const AddTaskBtn = () => {
     taskDescription: "",
     taskDate: "",
     taskTime: "",
-    employeeId: "",
+    assignedTo: [],
   });
   const [isOpen, setIsOpen] = useState(false);
   const employeeArray = [];
@@ -45,7 +45,7 @@ const AddTaskBtn = () => {
           employeeArray.push({
             label: `${user.firstName} ${user.lastName}`,
             value: user.userId,
-            name: "employeeId",
+            name: "assignedTo",
             jobTitle: user.jobTitle,
           });
         }
@@ -73,7 +73,7 @@ const AddTaskBtn = () => {
         taskDescription: "",
         taskDate: "",
         taskTime: "",
-        employeeId: "",
+        assignedTo: [],
       });
     }
     setIsOpen(!isOpen);
@@ -86,15 +86,22 @@ const AddTaskBtn = () => {
     });
   };
 
-  const handleSelectChange = (e) => {
+  const handleMultiSelectChange = (e) => {
+    const members = [];
+
+    e.forEach((e) => {
+      members.push(e.value);
+    });
+
     setTask({
       ...task,
-      [e.name]: e.value,
+      assignedTo: members,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(task)
     dispatch(addTask(task));
   };
 
@@ -146,15 +153,16 @@ const AddTaskBtn = () => {
               <Label>Assigned To</Label>
               <Select
                 options={employees}
-                onChange={handleSelectChange}
-                className={errors.employeeId ? "invalid" : ""}
+                isMulti
+                onChange={handleMultiSelectChange}
+                className={errors.assignedTo ? "invalid" : ""}
               />
               <Input
                 type="hidden"
                 disabled
-                invalid={errors.employeeId ? true : false}
+                invalid={errors.assignedTo ? true : false}
               />
-              <FormFeedback>{errors.employeeId}</FormFeedback>
+              <FormFeedback>{errors.assignedTo}</FormFeedback>
             </FormGroup>
           </Form>
         </ModalBody>

@@ -83,6 +83,15 @@ const AddEmployeeBtn = () => {
     });
   };
 
+  const handleTierLevelChange = e => {
+    const tierLevel = Number(e.target.value);
+
+    setCredentials({
+      ...credentials,
+      [e.target.name]: tierLevel,
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(registerEmployee(credentials));
@@ -148,7 +157,7 @@ const AddEmployeeBtn = () => {
                   type="select"
                   name="tierLevel"
                   id="tierLevel"
-                  onChange={handleChange}
+                  onChange={handleTierLevelChange}
                   invalid={errors.tierLevel ? true : false}
                 >
                   <option>Select</option>

@@ -20,7 +20,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const resetPassword = (email) => {
-    return auth.sendPasswordResetEmail();
+    console.log(email)
+    return auth.sendPasswordResetEmail(email);
   };
 
   const updateEmail = (email) => {
