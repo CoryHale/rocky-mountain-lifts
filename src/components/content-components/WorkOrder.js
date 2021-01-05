@@ -14,6 +14,7 @@ import {
   ModalFooter,
   Table,
 } from "reactstrap";
+import Select from "react-select";
 import SignatureCanvas from "react-signature-canvas";
 import { useAuth } from "../../contexts/AuthContext";
 import { getWorkOrder } from "../../actions/getWorkOrder";
@@ -81,6 +82,7 @@ const WorkOrder = () => {
   const [reviewFlag, setReviewFlag] = useState(false); // Flags when submitted for review
   const [flag, setFlag] = useState(false); // Flags when submitted for billing or closed
   const { currentUser } = useAuth();
+  const [curUserInfo, setCurUserInfo] = useState();
   const [editPunchOpen, setEditPunchOpen] = useState(false);
   const [currentPunch, setCurrentPunch] = useState();
   const [hours, setHours] = useState();
@@ -94,6 +96,34 @@ const WorkOrder = () => {
   const [inspectionForm, setInspectionForm] = useState();
   const [rmlTrainingForm, setRmlTrainingForm] = useState();
   const [skTrainingForm, setSkTrainingForm] = useState();
+  const [services, setServices] = useState([]);
+  const [serviceTypes, setServiceTypes] = useState([
+    {
+      label: "Install",
+      value: "Install",
+      name: "serviceType",
+    },
+    {
+      label: "Service",
+      value: "Service",
+      name: "serviceType",
+    },
+    {
+      label: "Training",
+      value: "Training",
+      name: "serviceType",
+    },
+    {
+      label: "Inspection",
+      value: "Inspection",
+      name: "serviceType",
+    },
+    {
+      label: "Warranty",
+      value: "Warranty",
+      name: "serviceType",
+    },
+  ]);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -150,6 +180,7 @@ const WorkOrder = () => {
   useEffect(() => {
     if (getWorkOrderFromState) {
       setWorkOrder(getWorkOrderFromState);
+      findServices(getWorkOrderFromState.serviceType);
     }
   }, [getWorkOrderFromState]);
 
@@ -162,6 +193,9 @@ const WorkOrder = () => {
           setCustomer(user);
         } else {
           crewMembers.push(user);
+          if (user.userId === currentUser.uid) {
+            setCurUserInfo(user);
+          }
         }
       });
       setEmployees(crewMembers);
@@ -204,14 +238,14 @@ const WorkOrder = () => {
     setFlag(false);
   }, [flag]);
 
-  const typeConverter = (types) => {
-    if (types) {
-      if (types.length === 1) {
-        return types;
-      } else {
-        return types.join(", ");
+  const findServices = (array) => {
+    const serviceArray = [];
+    for (let i = 0; i < serviceTypes.length; i++) {
+      if (array.includes(serviceTypes[i].value)) {
+        serviceArray.push(serviceTypes[i]);
       }
     }
+    setServiceTypes(serviceArray);
   };
 
   const dateConverter = (date) => {
@@ -703,6 +737,19 @@ const WorkOrder = () => {
 
   const submitServiceEditChange = (e) => {};
 
+  const handleServiceTypeChange = (e) => {
+    const services = [];
+
+    e.forEach((e) => {
+      services.push(e.value);
+    });
+
+    setWorkOrder({
+      ...workOrder,
+      serviceType: services,
+    });
+  };
+
   return (
     <div className="work-order-page">
       {workOrder ? (
@@ -716,11 +763,29 @@ const WorkOrder = () => {
             <div className="contact-div">
               <FormGroup>
                 <Label for="contactName">Contact Name</Label>
-                <Input disabled value={workOrder.contactName} />
+                <Input
+                  type="text"
+                  name="contactName"
+                  disabled={
+                    workOrder.status === "Closed" ||
+                    (curUserInfo && curUserInfo.tierLevel === 1)
+                  }
+                  value={workOrder.contactName}
+                  onChange={handleChange}
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="contactNumber">Contact Number</Label>
-                <Input disabled value={workOrder.contactNumber} />
+                <Input
+                  type="text"
+                  name="contactNumber"
+                  disabled={
+                    workOrder.status === "Closed" ||
+                    (curUserInfo && curUserInfo.tierLevel === 1)
+                  }
+                  value={workOrder.contactNumber}
+                  onChange={handleChange}
+                />
               </FormGroup>
             </div>
             <FormGroup>
@@ -746,18 +811,42 @@ const WorkOrder = () => {
             </FormGroup>
             <FormGroup className="type-input">
               <Label for="serviceType">Service Type(s)</Label>
-              <Input disabled value={typeConverter(workOrder.serviceType)} />
+              <Select
+                isMulti
+                disabled={
+                  workOrder.status === "Closed" ||
+                  (curUserInfo && curUserInfo.tierLevel === 1)
+                }
+                options={serviceTypes}
+                value={services}
+                onChange={handleServiceTypeChange}
+              />
             </FormGroup>
             <div className="date-div">
               <FormGroup>
                 <Label for="serviceDate">Service Date</Label>
-                <Input disabled value={dateConverter(workOrder.serviceDate)} />
+                <Input
+                  type="date"
+                  name="serviceDate"
+                  disabled={
+                    workOrder.status === "Closed" ||
+                    (curUserInfo && curUserInfo.tierLevel === 1)
+                  }
+                  value={dateConverter(workOrder.serviceDate)}
+                  onChange={handleChange}
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="serviceStartTime">Service Start Time</Label>
                 <Input
-                  disabled
+                  type="time"
+                  name="serviceStartTime"
+                  disabled={
+                    workOrder.status === "Closed" ||
+                    (curUserInfo && curUserInfo.tierLevel === 1)
+                  }
                   value={timeConverter(workOrder.serviceStartTime)}
+                  onChange={handleChange}
                 />
               </FormGroup>
             </div>
@@ -768,9 +857,14 @@ const WorkOrder = () => {
             <FormGroup className="description-input">
               <Label for="serviceDescription">Service Description</Label>
               <Input
-                disabled
                 type="textarea"
+                name="serviceDescription"
+                disabled={
+                  workOrder.status === "Closed" ||
+                  (curUserInfo && curUserInfo.tierLevel === 1)
+                }
                 value={workOrder.serviceDescription}
+                onChange={handleChange}
               />
             </FormGroup>
             <FormGroup>

@@ -8,7 +8,9 @@ export const REGISTER_CUSTOMER_FAILURE = "REGISTER_CUSTOMER_FAILURE";
 export const registerCustomer = (creds) => async (dispatch) => {
   dispatch({ type: REGISTER_CUSTOMER_START });
 
-  return await axiosWithAuth()
+  const axiosAuth = await axiosWithAuth();
+
+  return axiosAuth
     .post(`${dbUrl}/c_register`, creds)
     .then(() => {
       dispatch({

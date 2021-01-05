@@ -212,8 +212,8 @@ export {
   changeEmployeeStatus,
 } from "./changeEmployeeStatus";
 
-const dbUrl =
-  "http://localhost:5000/rocky-mountain-lifts-crm-db/us-central1/api"; // Development URL
-// const dbUrl = 'https://us-central1-rocky-mountain-lifts-crm-db.cloudfunctions.net/api'; // Production URL
+// const dbUrl =
+//   "http://localhost:5000/rocky-mountain-lifts-crm-db/us-central1/api"; // Development URL
+const dbUrl = 'https://us-central1-rocky-mountain-lifts-crm-db.cloudfunctions.net/api'; // Production URL
 
 export { dbUrl };

@@ -692,11 +692,43 @@ export default AddCustomerBtn;
 
 const options = [
   {
-    label: "Light Duty",
-    value: "Light Duty",
+    label: "Light Duty Auto Shop",
+    value: "Light Duty Auto Shop",
   },
   {
-    label: "Heavy Duty",
+    label: "Heavy Duty Auto Shop",
+    value: "Heavy Duty Auto Shop",
+  },
+  {
+    label: "Paint Suppliers",
+    value: "Paint Suppliers",
+  },
+  {
+    label: "Collision/Auto Body",
+    value: "Collision/Auto Body",
+  },
+  {
+    label: "Industrial Equipment",
+    value: "Industrial Equipment",
+  },
+  {
+    label: "Residential",
     value: "Heavy Duty",
+  },
+  {
+    label: "Residential",
+    value: "Heavy Duty",
+  },
+  {
+    label: "Automobiles and Parts",
+    value: "Automobiles and Parts",
+  },
+  {
+    label: "Aerospace and Defense",
+    value: "Aerospace and Defense",
+  },
+  {
+    label: "Light Duty Dealership",
+    value: "Light Duty Dealership",
   },
 ];

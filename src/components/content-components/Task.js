@@ -170,7 +170,6 @@ const Task = () => {
         crewArray.push(employees[i]);
       }
     }
-
     console.log(crewArray)
     setAssigned(crewArray);
   };
