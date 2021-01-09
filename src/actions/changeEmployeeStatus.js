@@ -8,7 +8,9 @@ export const CHANGE_EMPLOYEE_STATUS_FAILURE = 'CHANGE_EMPLOYEE_STATUS_FAILURE';
 export const changeEmployeeStatus = data => async dispatch => {
     dispatch({ type: CHANGE_EMPLOYEE_STATUS_START });
 
-    return await axiosWithAuth()
+    const axiosAuth = await axiosWithAuth();
+
+    return await axiosAuth
         .put(`${dbUrl}/employee/status`, data)
         .then(() => {
             dispatch({ 

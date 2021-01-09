@@ -97,36 +97,12 @@ const WorkOrder = () => {
   const [rmlTrainingForm, setRmlTrainingForm] = useState();
   const [skTrainingForm, setSkTrainingForm] = useState();
   const [services, setServices] = useState([]);
-  const [serviceTypes, setServiceTypes] = useState([
-    {
-      label: "Install",
-      value: "Install",
-      name: "serviceType",
-    },
-    {
-      label: "Service",
-      value: "Service",
-      name: "serviceType",
-    },
-    {
-      label: "Training",
-      value: "Training",
-      name: "serviceType",
-    },
-    {
-      label: "Inspection",
-      value: "Inspection",
-      name: "serviceType",
-    },
-    {
-      label: "Warranty",
-      value: "Warranty",
-      name: "serviceType",
-    },
-  ]);
+  const [employeeOptions, setEmployeeOptions] = useState([]);
+  const [assigned, setAssigned] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+  const a = [0, 2, 4];
 
   useEffect(() => {
     const pathArray = location.pathname.split("/");
@@ -180,7 +156,6 @@ const WorkOrder = () => {
   useEffect(() => {
     if (getWorkOrderFromState) {
       setWorkOrder(getWorkOrderFromState);
-      findServices(getWorkOrderFromState.serviceType);
     }
   }, [getWorkOrderFromState]);
 
@@ -198,21 +173,27 @@ const WorkOrder = () => {
           }
         }
       });
-      setEmployees(crewMembers);
     }
+      setEmployees(crewMembers);
   }, [fetchUsers]);
 
   useEffect(() => {
+    const crewMembers = [];
     const array = [];
 
     if (fetchAllUsers.users) {
       fetchAllUsers.users.forEach((user) => {
         if (user.userType === "employee") {
-          array.push(user);
+          crewMembers.push(user);
+          array.push({
+            label: `${user.firstName} ${user.lastName}`,
+            value: user.userId,
+          });
         }
       });
     }
-    setAllEmployees(array);
+    setAllEmployees(crewMembers);
+    setEmployeeOptions(array);
   }, [fetchAllUsers]);
 
   useEffect(() => {
@@ -238,46 +219,35 @@ const WorkOrder = () => {
     setFlag(false);
   }, [flag]);
 
-  const findServices = (array) => {
+  useEffect(() => {
     const serviceArray = [];
-    for (let i = 0; i < serviceTypes.length; i++) {
-      if (array.includes(serviceTypes[i].value)) {
-        serviceArray.push(serviceTypes[i]);
+
+    if (workOrder.serviceType) {
+      for (let i = 0; i < options.length; i++) {
+        if (workOrder.serviceType.includes(options[i].value)) {
+          serviceArray.push(i);
+        }
       }
     }
-    setServiceTypes(serviceArray);
-  };
+    setServices(serviceArray);
+  }, [workOrder.serviceType]);
 
-  const dateConverter = (date) => {
-    if (date) {
-      const dateArray = date.split("-");
-      return `${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`;
-    }
-  };
+  useEffect(() => {
+    const crewArray = [];
 
-  const timeConverter = (time) => {
-    if (time) {
-      const timeArray = time.split(":");
-      const hour = parseInt(timeArray[0]);
-      let m;
-
-      if (hour <= 11) {
-        m = "AM";
-      } else {
-        m = "PM";
+    if (workOrder.crewMembers && employeeOptions) {
+      console.log("I am here")
+      for(let i = 0; i < employeeOptions.length; i++) {
+        console.log("Im inside")
+        if(workOrder.crewMembers.includes(employeeOptions[i].value)) {
+          console.log(i)
+          crewArray.push(i);
+        }
       }
-
-      if (hour <= 12) {
-        const newHour = hour.toString();
-        timeArray[0] = newHour;
-      } else {
-        const newHour = (hour - 12).toString();
-        timeArray[0] = newHour;
-      }
-
-      return `${timeArray[0]}:${timeArray[1]} ${m}`;
     }
-  };
+    console.log(crewArray)
+    setAssigned(crewArray);
+  }, [workOrder.crewMembers, employeeOptions]);
 
   const addressConverter = (customer) => {
     if (customer.shopAddress) {
@@ -298,22 +268,6 @@ const WorkOrder = () => {
 
       const searchableAddress = `${newAddress},+${newCity},+${state}+${zipcode}`;
       setMapsAddress(searchableAddress);
-    }
-  };
-
-  const crewConverter = (members) => {
-    let crewNames = [];
-
-    if (members) {
-      members.forEach((member) => {
-        crewNames.push(`${member.firstName} ${member.lastName}`);
-      });
-
-      if (crewNames.length === 1) {
-        return crewNames;
-      } else {
-        return crewNames.join(", ");
-      }
     }
   };
 
@@ -750,6 +704,19 @@ const WorkOrder = () => {
     });
   };
 
+  const handleMultiSelectChange = (e) => {
+    const members = [];
+
+    e.map((e) => {
+      members.push(e.value);
+    });
+
+    setWorkOrder({
+      ...workOrder,
+      crewMembers: members,
+    });
+  };
+
   return (
     <div className="work-order-page">
       {workOrder ? (
@@ -817,8 +784,8 @@ const WorkOrder = () => {
                   workOrder.status === "Closed" ||
                   (curUserInfo && curUserInfo.tierLevel === 1)
                 }
-                options={serviceTypes}
-                value={services}
+                options={options}
+                value={services.map((i) => options[i])}
                 onChange={handleServiceTypeChange}
               />
             </FormGroup>
@@ -832,7 +799,7 @@ const WorkOrder = () => {
                     workOrder.status === "Closed" ||
                     (curUserInfo && curUserInfo.tierLevel === 1)
                   }
-                  value={dateConverter(workOrder.serviceDate)}
+                  value={workOrder.serviceDate}
                   onChange={handleChange}
                 />
               </FormGroup>
@@ -845,14 +812,26 @@ const WorkOrder = () => {
                     workOrder.status === "Closed" ||
                     (curUserInfo && curUserInfo.tierLevel === 1)
                   }
-                  value={timeConverter(workOrder.serviceStartTime)}
+                  value={workOrder.serviceStartTime}
                   onChange={handleChange}
                 />
               </FormGroup>
             </div>
             <FormGroup>
               <Label for="crewMembers">Crew Members</Label>
-              <Input disabled value={crewConverter(employees)} />
+              <Select
+                options={employeeOptions}
+                isMulti
+                disabled={
+                  workOrder.status === "Closed" ||
+                  (curUserInfo && curUserInfo.tierLevel === 1)
+                }
+                value={assigned.map(i => {
+                  console.log(i)
+                  return employeeOptions[i]
+                  })}
+                onChange={handleMultiSelectChange}
+              />
             </FormGroup>
             <FormGroup className="description-input">
               <Label for="serviceDescription">Service Description</Label>
@@ -1593,3 +1572,31 @@ const WorkOrder = () => {
 };
 
 export default WorkOrder;
+
+const options = [
+  {
+    label: "Install",
+    value: "Install",
+    name: "serviceType",
+  },
+  {
+    label: "Service",
+    value: "Service",
+    name: "serviceType",
+  },
+  {
+    label: "Training",
+    value: "Training",
+    name: "serviceType",
+  },
+  {
+    label: "Inspection",
+    value: "Inspection",
+    name: "serviceType",
+  },
+  {
+    label: "Warranty",
+    value: "Warranty",
+    name: "serviceType",
+  },
+];

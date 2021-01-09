@@ -254,7 +254,6 @@ const AddCustomerBtn = () => {
               <Label for="industry">Industry</Label>
               <Select
                 options={options}
-                name="industry"
                 onChange={handleSelectChange}
               />
               <Input
@@ -694,41 +693,46 @@ const options = [
   {
     label: "Light Duty Auto Shop",
     value: "Light Duty Auto Shop",
+    name: "industry"
   },
   {
     label: "Heavy Duty Auto Shop",
     value: "Heavy Duty Auto Shop",
+    name: "industry"
   },
   {
     label: "Paint Suppliers",
     value: "Paint Suppliers",
+    name: "industry"
   },
   {
     label: "Collision/Auto Body",
     value: "Collision/Auto Body",
+    name: "industry"
   },
   {
     label: "Industrial Equipment",
     value: "Industrial Equipment",
+    name: "industry"
   },
   {
     label: "Residential",
-    value: "Heavy Duty",
-  },
-  {
-    label: "Residential",
-    value: "Heavy Duty",
+    value: "Residential",
+    name: "industry"
   },
   {
     label: "Automobiles and Parts",
     value: "Automobiles and Parts",
+    name: "industry"
   },
   {
     label: "Aerospace and Defense",
     value: "Aerospace and Defense",
+    name: "industry"
   },
   {
     label: "Light Duty Dealership",
     value: "Light Duty Dealership",
+    name: "industry"
   },
 ];

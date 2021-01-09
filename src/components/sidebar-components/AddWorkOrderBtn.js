@@ -250,9 +250,6 @@ const AddWorkOrderBtn = () => {
   const warningCheck = (e) => {
     let warningsObject = {};
 
-    if (workOrder.serviceEndTime.trim() === "") {
-      warningsObject.serviceEndTime = "End Time";
-    }
     if (workOrder.jobNumber.trim() === "") {
       warningsObject.jobNumber = "Job Number";
     }
