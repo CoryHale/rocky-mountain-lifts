@@ -174,7 +174,7 @@ const WorkOrder = () => {
         }
       });
     }
-      setEmployees(crewMembers);
+    setEmployees(crewMembers);
   }, [fetchUsers]);
 
   useEffect(() => {
@@ -236,16 +236,16 @@ const WorkOrder = () => {
     const crewArray = [];
 
     if (workOrder.crewMembers && employeeOptions) {
-      console.log("I am here")
-      for(let i = 0; i < employeeOptions.length; i++) {
-        console.log("Im inside")
-        if(workOrder.crewMembers.includes(employeeOptions[i].value)) {
-          console.log(i)
+      console.log("I am here");
+      for (let i = 0; i < employeeOptions.length; i++) {
+        console.log("Im inside");
+        if (workOrder.crewMembers.includes(employeeOptions[i].value)) {
+          console.log(i);
           crewArray.push(i);
         }
       }
     }
-    console.log(crewArray)
+    console.log(crewArray);
     setAssigned(crewArray);
   }, [workOrder.crewMembers, employeeOptions]);
 
@@ -282,9 +282,10 @@ const WorkOrder = () => {
     return name;
   };
 
-  const clockIn = () => {
+  const clockIn = (e) => {
     const date = new Date();
     const time = date.getTime();
+    let flag = false;
 
     const punches = workOrder.crewPunches;
 
@@ -297,28 +298,33 @@ const WorkOrder = () => {
     } else {
       punches.forEach((punch) => {
         if (punch.crewId === currentUser.uid) {
+          flag = true;
           if (punch.clockIn === null) {
             punch.clockIn = time;
           } else {
             alert("Already clocked in");
           }
-        } else {
-          punches.push({
-            crewId: currentUser.uid,
-            timeAccrued: 0,
-            clockIn: time,
-          });
         }
       });
+
+      if (flag === false) {
+        punches.push({
+          crewId: currentUser.uid,
+          timeAccrued: 0,
+          clockIn: time,
+        });
+      }
     }
 
     setWorkOrder({
       ...workOrder,
       crewPunches: punches,
     });
+
+    handleEditWorkOrder(e);
   };
 
-  const clockOut = () => {
+  const clockOut = (e) => {
     const date = new Date();
     const time = date.getTime();
 
@@ -343,6 +349,8 @@ const WorkOrder = () => {
       ...workOrder,
       crewPunches: punches,
     });
+
+    handleEditWorkOrder(e);
   };
 
   const totalTime = (crewPunches) => {
@@ -826,10 +834,10 @@ const WorkOrder = () => {
                   workOrder.status === "Closed" ||
                   (curUserInfo && curUserInfo.tierLevel === 1)
                 }
-                value={assigned.map(i => {
-                  console.log(i)
-                  return employeeOptions[i]
-                  })}
+                value={assigned.map((i) => {
+                  console.log(i);
+                  return employeeOptions[i];
+                })}
                 onChange={handleMultiSelectChange}
               />
             </FormGroup>
@@ -1070,18 +1078,12 @@ const WorkOrder = () => {
               </FormGroup>
             ) : null}
             {workOrder.signature ? (
-              workOrder.serviceManager === currentUser.uid ? (
-                workOrder.status === "In Review" ? (
-                  <FormGroup className="submit-button edit-button">
-                    <Button
-                      outline
-                      color="success"
-                      onClick={handleEditWorkOrder}
-                    >
-                      Save Work Order
-                    </Button>
-                  </FormGroup>
-                ) : null
+              curUserInfo.tierLevel >= 2 ? (
+                <FormGroup className="submit-button edit-button">
+                  <Button outline color="success" onClick={handleEditWorkOrder}>
+                    Save Work Order
+                  </Button>
+                </FormGroup>
               ) : null
             ) : null}
             {workOrder.signature ? (

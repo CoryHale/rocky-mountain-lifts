@@ -8,10 +8,12 @@ export const ADD_EMPLOYEE_FAILURE = "ADD_EMPLOYEE_FAILURE";
 export const addEmployeeToCustomer = (updatedCustomer) => async (dispatch) => {
   dispatch({ type: ADD_EMPLOYEE_START });
 
+  console.log(updatedCustomer)
+
   const axiosAuth = await axiosWithAuth();
 
   return axiosAuth
-    .put(`${dbUrl}/customer`, updatedCustomer)
+    .put(`${dbUrl}/customer-employee`, updatedCustomer)
     .then(() => {
       dispatch({
         type: ADD_EMPLOYEE_SUCCESS,

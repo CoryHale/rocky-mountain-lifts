@@ -109,7 +109,7 @@ const AddWorkOrderBtn = () => {
             label: user.businessName,
             value: user.userId,
             name: "customer",
-            contactName: `${user.primaryContact && user.primaryContact.firstName}${user.primaryContact && user.primaryContact.lastName}`,
+            contactName: `${user.primaryContact && user.primaryContact.firstName} ${user.primaryContact && user.primaryContact.lastName}`,
             contactNumber: user.primaryOfficeNumber
           });
         }
