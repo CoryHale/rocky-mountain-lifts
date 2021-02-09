@@ -1084,13 +1084,11 @@ const WorkOrder = () => {
               </FormGroup>
             ) : null}
             {workOrder.signature ? (
-              curUserInfo.tierLevel >= 2 ? (
-                <FormGroup className="submit-button edit-button">
-                  <Button outline color="success" onClick={handleEditWorkOrder}>
-                    Save Work Order
-                  </Button>
-                </FormGroup>
-              ) : null
+              <FormGroup className="submit-button edit-button">
+                <Button outline color="success" onClick={handleEditWorkOrder}>
+                  Save Work Order
+                </Button>
+              </FormGroup>
             ) : null}
             {workOrder.signature ? (
               workOrder.serviceManager === currentUser.uid ? (
@@ -1129,7 +1127,7 @@ const WorkOrder = () => {
                 ) : null
               ) : null
             ) : null}
-            {currentUser.uid === 'uOgRremdhAYSRj9FljMDnWTy1Dr2' ? (
+            {currentUser.uid === "uOgRremdhAYSRj9FljMDnWTy1Dr2" ? (
               <FormGroup className="submit-button delete-button">
                 <Button outline color="danger" onClick={handleDeleteWorkOrder}>
                   Delete Work Order
