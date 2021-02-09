@@ -24,6 +24,7 @@ import { addWorkOrderReducer } from "./addWorkOrderReducer";
 import { getWorkOrdersReducer } from "./getWorkOrdersReducer";
 import { getWorkOrderReducer } from "./getWorkOrderReducer";
 import { editWorkOrderReducer } from "./editWorkOrderReducer";
+import { deleteWorkOrderReducer } from "./deleteWorkOrderReducer";
 
 // JOB REDUCERS
 import { jobToggleReducer } from "./jobToggleReducer";
@@ -69,6 +70,7 @@ const rootReducer = combineReducers({
   getWorkOrdersReducer,
   getWorkOrderReducer,
   editWorkOrderReducer,
+  deleteWorkOrderReducer,
   jobToggleReducer,
   registerCustomerReducer,
   getCustomersReducer,

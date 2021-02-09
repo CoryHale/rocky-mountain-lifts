@@ -111,6 +111,13 @@ export {
   editWorkOrder,
 } from "./editWorkOrder";
 
+export {
+  DELETE_WORK_ORDER_START,
+  DELETE_WORK_ORDER_SUCCESS,
+  DELETE_WORK_ORDER_FAILURE,
+  deleteWorkOrder,
+} from "./deleteWorkOrder";
+
 // JOB ACTIONS
 
 export { OPEN_JOBS, CLOSE_JOBS, openJobs, closeJobs } from "./jobToggle";
@@ -212,8 +219,8 @@ export {
   changeEmployeeStatus,
 } from "./changeEmployeeStatus";
 
-// const dbUrl =
-//   "http://localhost:5000/rocky-mountain-lifts-crm-db/us-central1/api"; // Development URL
-const dbUrl = 'https://us-central1-rocky-mountain-lifts-crm-db.cloudfunctions.net/api'; // Production URL
+const dbUrl =
+  "http://localhost:5000/rocky-mountain-lifts-crm-db/us-central1/api"; // Development URL
+// const dbUrl = 'https://us-central1-rocky-mountain-lifts-crm-db.cloudfunctions.net/api'; // Production URL
 
 export { dbUrl };

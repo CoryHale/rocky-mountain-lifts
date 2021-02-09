@@ -20,6 +20,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { getWorkOrder } from "../../actions/getWorkOrder";
 import { getUsers } from "../../actions/getUsers";
 import { editWorkOrder } from "../../actions/editWorkOrder";
+import { deleteWorkOrder } from "../../actions/deleteWorkOrder";
 import app from "../../firebase";
 
 import "../../styles/workorder.scss";
@@ -725,6 +726,11 @@ const WorkOrder = () => {
     });
   };
 
+  const handleDeleteWorkOrder = (e) => {
+    e.preventDefault();
+    dispatch(deleteWorkOrder(workOrder.workOrderId));
+  };
+
   return (
     <div className="work-order-page">
       {workOrder ? (
@@ -1122,6 +1128,13 @@ const WorkOrder = () => {
                   </FormGroup>
                 ) : null
               ) : null
+            ) : null}
+            {currentUser.uid === 'uOgRremdhAYSRj9FljMDnWTy1Dr2' ? (
+              <FormGroup className="submit-button delete-button">
+                <Button outline color="danger" onClick={handleDeleteWorkOrder}>
+                  Delete Work Order
+                </Button>
+              </FormGroup>
             ) : null}
           </Form>
         </div>
